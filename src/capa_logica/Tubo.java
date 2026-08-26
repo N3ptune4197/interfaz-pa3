@@ -4,15 +4,107 @@
  */
 package capa_logica;
 
-/**
- *
- * @author NAYR VASQUEZ
- */
+import java.awt.Rectangle;
+
 public class Tubo {
-    private double x;
-    private int anchoTubo = 60;
-    private int altoHueco;
-    private int posicionHueco; // coordenada Y donde comienza el hueco
+    private double X;
+    private int anchoTubo;
+    private int altoAgujero;
+    private int posicionAgujero; // Coordenada Y donde comienza el agujero
     private double velocidad;
-    private boolean superado; // true si el pájaro ya lo pasó (para sumar puntos una sola vez)
+    private boolean superado; // True si el pájaro ya lo pasó (para sumar puntos una sola vez)
+    
+    public Tubo() {
+        this.X = 0;
+        this.anchoTubo = 60;
+        this.altoAgujero = 0;
+        this.posicionAgujero = 0;
+        this.velocidad = 0;
+        this.superado = false;
+    }
+    
+    public Tubo(double X, int altoPantalla, int altoAgujero, double velocidad) {
+        this.X = X;
+        this.anchoTubo = 60;
+        this.altoAgujero = altoAgujero;
+        this.velocidad = velocidad;
+        this.superado = false;
+
+        // Posición aleatoria del agujero, dejando margen arriba y abajo
+        int margen = 50;
+        int rango = altoPantalla - altoAgujero - (margen * 2);
+        this.posicionAgujero = margen + (int) (Math.random() * rango);
+    }
+
+    public double getX() {
+        return X;
+    }
+
+    public void setX(double X) {
+        this.X = X;
+    }
+
+    public int getAnchoTubo() {
+        return anchoTubo;
+    }
+
+    public void setAnchoTubo(int anchoTubo) {
+        this.anchoTubo = anchoTubo;
+    }
+
+    public int getAltoAgujero() {
+        return altoAgujero;
+    }
+
+    public void setAltoAgujero(int altoAgujero) {
+        this.altoAgujero = altoAgujero;
+    }
+
+    public int getPosicionAgujero() {
+        return posicionAgujero;
+    }
+
+    public void setPosicionAgujero(int posicionAgujero) {
+        this.posicionAgujero = posicionAgujero;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public boolean isSuperado() {
+        return superado;
+    }
+
+    public void setSuperado(boolean superado) {
+        this.superado = superado;
+    }
+    
+    // Mueve el tubo hacia la izquierda
+    public void actualizar() {
+        X -= velocidad;
+    }
+    
+    public boolean estaFueraDePantalla() {
+        return X + anchoTubo < 0;
+    }
+    
+    // Obtiene el rectángulo del tubo superior para detectar colisiones
+    public Rectangle getRectanguloSuperior() {
+        return new Rectangle((int)X, 0, anchoTubo, posicionAgujero);
+    }
+    
+    // Obtiene el rectángulo del tubo inferior para detectar colisiones
+    public Rectangle getRectanguloInferior(int altoPantalla) {
+        int yInferior = posicionAgujero + altoAgujero;
+        return new Rectangle((int)X, yInferior, anchoTubo, altoPantalla - yInferior);
+    }
+    
+    public void marcarSuperado() {
+        this.superado = true;
+    }
 }
