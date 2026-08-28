@@ -376,22 +376,4 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         // No usado
     }
-
-    // =========================================================
-    // MAIN
-    // =========================================================
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Flappy Bird - 16 Bits");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setResizable(false);
-            int ancho = 600, alto = 800;
-            PanelJuego panel = new PanelJuego(frame, ancho, alto);
-            frame.add(panel);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
 }
