@@ -68,7 +68,7 @@ public class Juego {
         // Configuración inicial
         this.altoAgujero = 180;
         this.velocidadTubos = 3.0;
-        this.distanciaEntreTubos = 300;
+        this.distanciaEntreTubos = 320;
         
         this.velocidadBase = 3.0;
         this.velocidadTubos = velocidadBase;

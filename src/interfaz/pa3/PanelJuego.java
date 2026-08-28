@@ -21,6 +21,10 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     private float anguloAla = 0;
     private double offsetNubes = 0;
+    
+    
+    private long tiempoGameOver = 0;
+    private static final int RETRASO_REINICIO = 1500; 
 
     // Sonidos (guardamos la URL, no el Clip)
     private URL urlSalto;
@@ -316,10 +320,11 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
             juego.actualizar();
         }
 
-        // Detectar el momento exacto en que pasa de JUGANDO a GAME_OVER
+        // Detectar momento exacto en que pasa a GAME_OVER
         if (estadoAnterior == Juego.Estado.JUGANDO
                 && juego.getEstado() == Juego.Estado.GAME_OVER) {
-            reproducirSonido(urlMuerte);  // <--- AHORA CON URL
+            reproducirSonido(urlMuerte);
+            tiempoGameOver = System.currentTimeMillis(); // Guardamos el instante
         }
 
         estadoAnterior = juego.getEstado();
@@ -340,12 +345,20 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         Juego.Estado estado = juego.getEstado();
 
         if (estado == Juego.Estado.GAME_OVER) {
-            juego.reiniciarJuego();
-            // NO reproducimos sonido de muerte aquí
+            long ahora = System.currentTimeMillis();
+            if (ahora - tiempoGameOver >= RETRASO_REINICIO) {
+                // Solo reinicia si ha pasado el retraso
+                juego.reiniciarJuego();
+                // Opcional: reproducir sonido de salto al reiniciar
+                // reproducirSonido(urlSalto);
+            }
+            // Si no ha pasado el tiempo, no hacemos nada
+            repaint();
+            return;
         } else {
             juego.saltar();
             if (estado == Juego.Estado.MENU || estado == Juego.Estado.JUGANDO) {
-                reproducirSonido(urlSalto);   // <--- AHORA CON URL
+                reproducirSonido(urlSalto);
             }
         }
 
