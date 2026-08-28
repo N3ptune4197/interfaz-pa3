@@ -26,7 +26,7 @@ public class Tubo {
         this.velocidad = velocidad;
         this.superado = false;
 
-        // Genera la posición del hueco de forma aleatoria, con margen arriba y abajo
+        // Genera la posición del agujero de forma aleatoria, con margen arriba y abajo
         // para que nunca quede pegado al borde de la pantalla
         int margen = 80;
         int rango = altoPantalla - altoAgujero - (margen * 2);

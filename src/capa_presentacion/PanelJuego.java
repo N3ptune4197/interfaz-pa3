@@ -140,7 +140,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         g.drawString(titulo, x, y);
 
         g.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
-        String instruccion = "SPACE o UP para empezar";
+        String instruccion = "BARRA ESPACIADORA para empezar";
         fm = g.getFontMetrics();
         x = (getWidth() - fm.stringWidth(instruccion)) / 2;
         y += 80;
@@ -271,8 +271,8 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         Puntuacion p = juego.getPuntuacion();
         g.setColor(Color.WHITE);
         g.setFont(new Font("Press Start 2P", Font.BOLD, 20));
-        g.drawString("PTS: " + p.getPuntosActuales(), 20, 40);
-        g.drawString("BEST: " + p.getMejorPuntuacion(), 20, 70);
+        g.drawString("PUNTAJE: " + p.getPuntosActuales(), 20, 40);
+        g.drawString("MEJOR PUNTAJE: " + p.getMejorPuntuacion(), 20, 70);
     }
 
     private void dibujarGameOver(Graphics2D g) {
@@ -281,7 +281,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.RED);
         g.setFont(new Font("Press Start 2P", Font.BOLD, 48));
-        String msg = "GAME OVER";
+        String msg = "JUEGO TERMINADO";
         FontMetrics fm = g.getFontMetrics();
         int x = (getWidth() - fm.stringWidth(msg)) / 2;
         int y = getHeight() / 2 - 60;
@@ -290,14 +290,14 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         Puntuacion p = juego.getPuntuacion();
         g.setColor(Color.WHITE);
         g.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
-        msg = "SCORE: " + p.getPuntosActuales();
+        msg = "PUNTAJE: " + p.getPuntosActuales();
         fm = g.getFontMetrics();
         x = (getWidth() - fm.stringWidth(msg)) / 2;
         y += 70;
         g.drawString(msg, x, y);
 
         g.setFont(new Font("Press Start 2P", Font.PLAIN, 16));
-        msg = "SPACE para reiniciar";
+        msg = "BARRA ESPACIADORA para reiniciar";
         fm = g.getFontMetrics();
         x = (getWidth() - fm.stringWidth(msg)) / 2;
         y += 50;

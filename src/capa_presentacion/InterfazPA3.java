@@ -16,7 +16,6 @@ public class InterfazPA3 {
             
             // Opcional: limitar ancho mínimo/máximo si quieres
             // ancho = Math.max(400, Math.min(ancho, 800));
-
             JFrame frame = new JFrame("Flappy Bird - 16 Bits");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);

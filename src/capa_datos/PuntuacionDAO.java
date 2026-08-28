@@ -10,10 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- *
- * @author JIMMYSIN
- */
 public class PuntuacionDAO {
     private final String rutaArchivo = "mejor_puntuacion.txt";
     public void guardarMejorPuntuacion(int puntos){
