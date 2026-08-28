@@ -4,21 +4,12 @@
  */
 package capa_logica;
 
-
-
-
-
-
 import capa_datos.PuntuacionDAO;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author Diego Estrada
- */
 public class Juego {
     
     public enum Estado {
@@ -28,7 +19,6 @@ public class Juego {
     private Estado estado;
 
     // Objetos del juego
-
     private Pajaro pajaro;
     private List<Tubo> tubos;
     private Puntuacion puntuacion;
@@ -38,24 +28,17 @@ public class Juego {
     private int ultimoPuntoIncremento = 0; 
 
     // Configuracion de pantalla
-    
     private int anchoPantalla;
     private int altoPantalla;
 
     // Configuracion de los tubos
-
     private int altoAgujero;
     private double velocidadTubos;
     private int distanciaEntreTubos;
 
-    // Control de generacion
-
-    private int contadorTubos;
-
     private Random random;
 
     public Juego(int anchoPantalla, int altoPantalla) {
-
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
 
@@ -73,8 +56,6 @@ public class Juego {
         this.velocidadBase = 3.0;
         this.velocidadTubos = velocidadBase;
 
-        this.contadorTubos = 0;
-
         // Crear puntuación y cargar récord
         this.puntuacion = new Puntuacion();
 
@@ -85,11 +66,8 @@ public class Juego {
         crearPajaro();
     }
 
-    /**
-     * Crea o reinicia el pájaro.
-     */
+    // Crea o reinicia el pájaro
     private void crearPajaro() {
-
         double posicionX = anchoPantalla * 0.25;
         double posicionY = altoPantalla * 0.45;
 
@@ -101,23 +79,17 @@ public class Juego {
         );
     }
 
-    // =========================================================
-    // INICIO DEL JUEGO
-    // =========================================================
-
-    /**
-     * Inicia una nueva partida.
-     */
+    
+    // ---INICIO DEL JUEGO---
+    // Inicia una nueva partida
     public void iniciarJuego() {
-
         crearPajaro();
 
         tubos.clear();
 
         puntuacion.reiniciar();
 
-        contadorTubos = 0;
-        velocidadTubos = velocidadBase;   // RESTAURAMOS
+        velocidadTubos = velocidadBase;   // Restauramos
         ultimoPuntoIncremento = 0;        // Reiniciamos bandera
         estado = Estado.JUGANDO;
 
@@ -125,25 +97,16 @@ public class Juego {
         generarTubo();
     }
 
-    /**
-     * Reinicia la partida después de perder.
-     */
+    // Reinicia la partida después de perder
     public void reiniciarJuego() {
         iniciarJuego();
     }
 
-    // =========================================================
-    // ACTUALIZACIÓN DEL JUEGO
-    // =========================================================
-
-    /**
-     * Actualiza toda la lógica del juego.
-     *
-     * Este método debe ser llamado periódicamente desde
-     * el Timer utilizado por PanelJuego.
-     */
+    
+    // ---ACTUALIZACIÓN DEL JUEGO---
+    // Actualiza toda la lógica del juego
+    // Este método debe ser llamado periódicamente desde el Timer utilizado por PanelJuego
     public void actualizar() {
-
         if (estado != Estado.JUGANDO) {
             return;
         }
@@ -157,7 +120,7 @@ public class Juego {
         // Generar nuevos tubos
         controlarGeneracionTubos();
         
-        // comprobar puntuacon
+        // Comprobar puntuación
         comprobarPuntuacion();
         
         int pts = puntuacion.getPuntosActuales();
@@ -174,42 +137,25 @@ public class Juego {
         
     }
 
-    // =========================================================
-    // PÁJARO
-    // =========================================================
-
-    /**
-     * Hace saltar al pájaro.
-     */
+    
+    // ---PÁJARO---
+    // Hace saltar al pájaro
     public void saltar() {
-
         if (estado == Estado.MENU) {
-
             iniciarJuego();
-
             pajaro.saltare();
-
         } else if (estado == Estado.JUGANDO) {
-
             pajaro.saltare();
-
         } else if (estado == Estado.GAME_OVER) {
-
             reiniciarJuego();
-
             pajaro.saltare();
         }
     }
 
-    // =========================================================
-    // TUBOS
-    // =========================================================
-
-    /**
-     * Genera un nuevo tubo.
-     */
+    
+    // ---TUBOS---
+    // Genera un nuevo tubo
     private void generarTubo() {
-
         double posicionX = anchoPantalla;
 
         Tubo tubo = new Tubo(
@@ -222,17 +168,12 @@ public class Juego {
         tubos.add(tubo);
     }
 
-    /**
-     * Actualiza todos los tubos.
-     */
+    // Actualiza todos los tubos
     private void actualizarTubos() {
-
         Iterator<Tubo> iterator = tubos.iterator();
 
         while (iterator.hasNext()) {
-
             Tubo tubo = iterator.next();
-
             tubo.actualizar();
 
             // Eliminar tubos que ya salieron de la pantalla
@@ -242,15 +183,10 @@ public class Juego {
         }
     }
 
-    /**
-     * Controla cuándo se debe crear un nuevo tubo.
-     */
+    // Controla cuándo se debe crear un nuevo tubo
     private void controlarGeneracionTubos() {
-
         if (tubos.isEmpty()) {
-
             generarTubo();
-
             return;
         }
 
@@ -258,84 +194,50 @@ public class Juego {
 
         if (ultimoTubo.getX()
                 <= anchoPantalla - distanciaEntreTubos) {
-
             generarTubo();
         }
     }
 
-    // =========================================================
-    // COLISIONES
-    // =========================================================
-
-    /**
-     * Comprueba si el pájaro ha chocado con algún tubo.
-     */
+    
+    // ---COLISIONES---
+    // Comprueba si el pájaro ha chocado con algún tubo
     private void comprobarColisiones() {
-
         for (Tubo tubo : tubos) {
+            boolean colisionSuperior = pajaro.getRectanngulo().intersects(tubo.getRectanguloSuperior());
 
-            boolean colisionSuperior =
-                    pajaro.getRectanngulo()
-                    .intersects(tubo.getRectanguloSuperior());
-
-            boolean colisionInferior =
-                    pajaro.getRectanngulo()
-                    .intersects(
-                            tubo.getRectanguloInferior(altoPantalla)
-                    );
+            boolean colisionInferior = pajaro.getRectanngulo().intersects(tubo.getRectanguloInferior(altoPantalla));
 
             if (colisionSuperior || colisionInferior) {
-
                 terminarJuego();
-
                 return;
             }
         }
     }
 
-    /**
-     * Comprueba si el pájaro salió de los límites de la pantalla.
-     */
+    // Comprueba si el pájaro salió de los límites de la pantalla
     private void comprobarLimites() {
-
-        if (pajaro.getY() < 0
-                || pajaro.getY() + pajaro.getAlto() > altoPantalla) {
-
+        if (pajaro.getY() < 0 || pajaro.getY() + pajaro.getAlto() > altoPantalla) {
             terminarJuego();
         }
     }
 
-    // =========================================================
-    // PUNTUACIÓN
-    // =========================================================
-
-    /**
-     * Comprueba si el pájaro ha superado algún tubo.
-     */
+    
+    // ---PUNTUACIÓN---
+    // Comprueba si el pájaro ha superado algún tubo
     private void comprobarPuntuacion() {
-
         for (Tubo tubo : tubos) {
 
-            if (!tubo.isSuperado()
-                    && pajaro.getX()
-                    > tubo.getX() + tubo.getAnchoTubo()) {
-
+            if (!tubo.isSuperado() && pajaro.getX() > tubo.getX() + tubo.getAnchoTubo()) {
                 tubo.marcarSuperado();
-
                 puntuacion.sumarPunto();
             }
         }
     }
 
-    // =========================================================
-    // FIN DEL JUEGO
-    // =========================================================
-
-    /**
-     * Finaliza la partida y guarda el récord.
-     */
+    
+    // ---FIN DEL JUEGO---
+    // Finaliza la partida y guarda el récord
     private void terminarJuego() {
-
         if (estado != Estado.JUGANDO) {
             return;
         }
@@ -345,15 +247,11 @@ public class Juego {
         pajaro.setVivo(false);
 
         // Guardar récord
-        puntuacionDAO.guardarMejorPuntuacion(
-                puntuacion.getMejorPuntuacion()
-        );
+        puntuacionDAO.guardarMejorPuntuacion(puntuacion.getMejorPuntuacion());
     }
 
-    // =========================================================
-    // GETTERS
-    // =========================================================
-
+    
+    // ---GETTERS---
     public Estado getEstado() {
         return estado;
     }
@@ -386,10 +284,8 @@ public class Juego {
         return velocidadTubos;
     }
 
-    // =========================================================
-    // SETTERS
-    // =========================================================
-
+    
+    // ---SETTERS---
     public void setAnchoPantalla(int anchoPantalla) {
         this.anchoPantalla = anchoPantalla;
     }

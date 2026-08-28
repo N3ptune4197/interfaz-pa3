@@ -1,4 +1,4 @@
-package interfaz.pa3;
+package capa_presentacion;
 
 import javax.swing.*;
 import java.awt.*;

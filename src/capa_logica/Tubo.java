@@ -26,27 +26,62 @@ public class Tubo {
         this.velocidad = velocidad;
         this.superado = false;
 
-        // Margen más amplio para evitar bordes imposibles
+        // Genera la posición del hueco de forma aleatoria, con margen arriba y abajo
+        // para que nunca quede pegado al borde de la pantalla
         int margen = 80;
         int rango = altoPantalla - altoAgujero - (margen * 2);
         if (rango < 0) rango = 0;
         this.posicionAgujero = margen + (int) (Math.random() * rango);
     }
 
-    // Getters y setters (los mismos que tenías)
+    // Getters y setters
+    public double getX() {
+        return X;
+    }
 
-    public double getX() { return X; }
-    public void setX(double X) { this.X = X; }
-    public int getAnchoTubo() { return anchoTubo; }
-    public void setAnchoTubo(int anchoTubo) { this.anchoTubo = anchoTubo; }
-    public int getAltoAgujero() { return altoAgujero; }
-    public void setAltoAgujero(int altoAgujero) { this.altoAgujero = altoAgujero; }
-    public int getPosicionAgujero() { return posicionAgujero; }
-    public void setPosicionAgujero(int posicionAgujero) { this.posicionAgujero = posicionAgujero; }
-    public double getVelocidad() { return velocidad; }
-    public void setVelocidad(double velocidad) { this.velocidad = velocidad; }
-    public boolean isSuperado() { return superado; }
-    public void setSuperado(boolean superado) { this.superado = superado; }
+    public void setX(double X) {
+        this.X = X;
+    }
+
+    public int getAnchoTubo() {
+        return anchoTubo;
+    }
+
+    public void setAnchoTubo(int anchoTubo) {
+        this.anchoTubo = anchoTubo;
+    }
+
+    public int getAltoAgujero() {
+        return altoAgujero;
+    }
+
+    public void setAltoAgujero(int altoAgujero) {
+        this.altoAgujero = altoAgujero;
+    }
+
+    public int getPosicionAgujero() {
+        return posicionAgujero;
+    }
+
+    public void setPosicionAgujero(int posicionAgujero) {
+        this.posicionAgujero = posicionAgujero;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public boolean isSuperado() {
+        return superado;
+    }
+
+    public void setSuperado(boolean superado) {
+        this.superado = superado;
+    }
 
     public void actualizar() {
         X -= velocidad;

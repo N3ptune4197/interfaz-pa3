@@ -4,10 +4,6 @@
  */
 package capa_logica;
 
-/**
- *
- * @author JIMMYSIN
- */
 public class Puntuacion {
     private int puntosActuales;
     private int mejorPuntuacion;
@@ -16,9 +12,9 @@ public class Puntuacion {
         this.puntosActuales = 0;
         this.mejorPuntuacion = 0;
     }
-    
+
     public Puntuacion(int puntosActuales, int mejorPuntuacion) {
-        this.puntosActuales = 0;
+        this.puntosActuales = puntosActuales;
         this.mejorPuntuacion = mejorPuntuacion;
     }
 

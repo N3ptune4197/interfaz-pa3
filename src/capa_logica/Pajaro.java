@@ -6,10 +6,6 @@ package capa_logica;
 
 import java.awt.Rectangle;
 
-/**
- *
- * @author JIMMYSIN
- */
 public class Pajaro {
     private double X;
     private double Y;
@@ -106,17 +102,14 @@ public class Pajaro {
         this.vivo = vivo;
     }
     
+    // Aplica la gravedad y mueve al pájaro cada frame
     public void actualizar(){
         velocidadY += gravedad;
         Y += velocidadY;
     }
     
     public void saltare(){
-        velocidadY = fuerzaSalto;
-    }
-    
-    public boolean chocaConLimites(int altoPantalla){
-        return Y < 0 || + alto > altoPantalla;
+        velocidadY = fuerzaSalto; // Le damos impulso hacia arriba
     }
     
     public Rectangle getRectanngulo(){

@@ -1,4 +1,4 @@
-package interfaz.pa3;
+package capa_presentacion;
 
 import capa_logica.Juego;
 import capa_logica.Pajaro;
@@ -22,11 +22,10 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     private float anguloAla = 0;
     private double offsetNubes = 0;
     
-    
     private long tiempoGameOver = 0;
     private static final int RETRASO_REINICIO = 1500; 
 
-    // Sonidos (guardamos la URL, no el Clip)
+    // Sonidos (Se guarda la URL)
     private URL urlSalto;
     private URL urlMuerte;
 
@@ -46,18 +45,16 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     }
 
     private void cargarSonidos() {
-        // Mantengo tus rutas originales
-        urlSalto = getClass().getResource("../../resources/sonidos/salto.wav");
-        urlMuerte = getClass().getResource("../../resources/sonidos/muerte.wav");
+        // Rutas de los sonidos dentro del proyecto
+        urlSalto = getClass().getResource("../resources/sonidos/salto.wav");
+        urlMuerte = getClass().getResource("../resources/sonidos/muerte.wav");
 
         if (urlSalto == null) System.out.println("No se encontró salto.wav");
         if (urlMuerte == null) System.out.println("No se encontró muerte.wav");
     }
 
-    /**
-     * Reproduce un sonido creando un nuevo Clip cada vez (más fiable).
-     * Se ejecuta en un hilo para no bloquear el EDT.
-     */
+    // Reproduce un sonido creando un nuevo Clip
+    // Se ejecuta en un hilo para no bloquear el EDT
     private void reproducirSonido(URL url) {
         if (url == null) return;
 
@@ -72,10 +69,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         }).start();
     }
 
-    // =========================================================
-    // PINTADO (TODO IGUAL QUE ANTES)
-    // =========================================================
-
+    // Métodos de dibujo
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -310,10 +304,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         g.drawString(msg, x, y);
     }
 
-    // =========================================================
-    // ACTION & KEY LISTENER (SOLO CAMBIA la llamada a reproducirSonido)
-    // =========================================================
-
+    // Eventos de teclado y del timer
     @Override
     public void actionPerformed(ActionEvent e) {
         if (juego.getEstado() == Juego.Estado.JUGANDO) {
@@ -350,7 +341,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
                 // Solo reinicia si ha pasado el retraso
                 juego.reiniciarJuego();
                 // Opcional: reproducir sonido de salto al reiniciar
-                // reproducirSonido(urlSalto);
+                // ReproducirSonido(urlSalto);
             }
             // Si no ha pasado el tiempo, no hacemos nada
             repaint();
@@ -361,7 +352,6 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
                 reproducirSonido(urlSalto);
             }
         }
-
         repaint();
     }
 
