@@ -1,20 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package interfaz.pa3;
 
-/**
- *
- * @author User
- */
+import javax.swing.*;
+
 public class InterfazPA3 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Flappy Bird");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setResizable(false);
+
+            int ancho = 600;
+            int alto = 800; // Puedes ajustar estas medidas
+
+            PanelJuego panel = new PanelJuego(frame, ancho, alto);
+            frame.add(panel);
+            frame.pack(); // Ajusta al tamaño preferido del panel
+            frame.setLocationRelativeTo(null); // Centra en la pantalla
+            frame.setVisible(true);
+        });
     }
-    
 }

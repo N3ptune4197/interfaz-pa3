@@ -4,6 +4,11 @@
  */
 package capa_logica;
 
+
+
+
+
+
 import capa_datos.PuntuacionDAO;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,6 +33,9 @@ public class Juego {
     private List<Tubo> tubos;
     private Puntuacion puntuacion;
     private PuntuacionDAO puntuacionDAO;
+    
+    private double velocidadBase;
+    private int ultimoPuntoIncremento = 0; 
 
     // Configuracion de pantalla
     
@@ -60,7 +68,10 @@ public class Juego {
         // Configuración inicial
         this.altoAgujero = 180;
         this.velocidadTubos = 3.0;
-        this.distanciaEntreTubos = 250;
+        this.distanciaEntreTubos = 300;
+        
+        this.velocidadBase = 3.0;
+        this.velocidadTubos = velocidadBase;
 
         this.contadorTubos = 0;
 
@@ -106,7 +117,8 @@ public class Juego {
         puntuacion.reiniciar();
 
         contadorTubos = 0;
-
+        velocidadTubos = velocidadBase;   // RESTAURAMOS
+        ultimoPuntoIncremento = 0;        // Reiniciamos bandera
         estado = Estado.JUGANDO;
 
         // Crear el primer tubo
@@ -144,12 +156,22 @@ public class Juego {
 
         // Generar nuevos tubos
         controlarGeneracionTubos();
+        
+        // comprobar puntuacon
+        comprobarPuntuacion();
+        
+        int pts = puntuacion.getPuntosActuales();
+        if (pts > 0 && pts % 10 == 0 && pts != ultimoPuntoIncremento) {
+            ultimoPuntoIncremento = pts;
+            velocidadTubos = Math.min(velocidadTubos + 0.15, 8.0);
+        }
 
         // Comprobar colisiones
         comprobarColisiones();
 
         // Comprobar límites
         comprobarLimites();
+        
     }
 
     // =========================================================
